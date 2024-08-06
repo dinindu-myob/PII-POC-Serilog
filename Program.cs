@@ -16,9 +16,11 @@ Customer customer = new Customer
 Log.Logger = new LoggerConfiguration()
     //Using Custom enricher
     //.Enrich.With(new SensitiveDataEnricher())
-    //
-    //Using Serilog.Enrichers.Sensitive
+    
+    //Using Serilog.Enrichers.Sensitive Default masking
     //.Enrich.WithSensitiveDataMasking()
+
+    //Using Serilog.Enrichers.Sensitive Custom masking
     .Enrich.WithSensitiveDataMasking(
         options =>
         {
@@ -33,9 +35,10 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateLogger();
 
-
+Console.WriteLine("Logging Customer Object directly");
 Log.Information(@"Customer Object {@Customer}", customer);
 
+Console.WriteLine("Logging Customer Info as a formatted string");
 Log.Information($"Customer Info: ID: {customer.Id}, Name: {customer.Name}, " +
                 $"Email: {customer.Email}, Serial Number: {customer.SerialNumber}");
 
